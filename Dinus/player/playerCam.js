@@ -5,15 +5,15 @@ import {
 	Euler,
 	EventDispatcher,
 	Vector3
-} from "../../three.min.js";
-import * as THREE from '../../three.min.js';
+} from "../util/three.min.js";
+import * as THREE from '../util/three.min.js';
 
 var FirstPersonPlayer = function ( scene ){
 
     var scene = scene;
     var camera = new THREE.PerspectiveCamera( 120, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.y = 10;
-
+    this.camera = camera;
     var elm = document.body;
     var moveForward = false;
     var moveBackward = false;
@@ -152,7 +152,7 @@ var FirstPersonPlayer = function ( scene ){
 	};
 
 
-    this.render = function( renderer ) {
+    this.render = function( renderer, s ) {
 
         var time = performance.now();
         var delta = ( time - prevTime ) / 1000;
@@ -186,7 +186,7 @@ var FirstPersonPlayer = function ( scene ){
         prevTime = time;
     
         
-        renderer.render( scene, camera );
+        renderer.render( s, camera );
     }
 
 
