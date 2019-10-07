@@ -20,6 +20,10 @@ class InputManager {
         let up = this.onKeyUp.bind(this)
         document.addEventListener( 'keydown', down, false );
         document.addEventListener( 'keyup', up, false );
+        
+        let mouse = this.mouseMove.bind(this)
+        this.mouse_x = 0; this.mouse_y = 0;
+        document.addEventListener( 'mousemove', mouse, false );
 
         // Setup Basic Events
         ApplyBasicBindings( this )
@@ -45,6 +49,7 @@ class InputManager {
     /* ====================== Listeners ======================= */
 
     onKeyDown (event) {
+        document.body.requestPointerLock();
 
         // Look for keycodes that you are tracking
         if ( ! (event.key in this.inputTrackerBindings) ) return;
@@ -65,13 +70,25 @@ class InputManager {
 
     }
 
+    mouseMove ( event ) {
+
+        this.mouse_x = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+		this.mouse_y = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+    }
+
 
     /* ====================== New Frame ======================= */
 
     // Called when listening period for a frame ends
     newFrame () {
+
         for (let code in this.inputTrackerBindings)
             this.inputTrackerBindings[ code ].newFrame()
+
+        // Reset mouse delta position
+        this.mouse_x  = 0
+        this.mouse_y = 0
     }
 
 
@@ -94,9 +111,9 @@ class InputManager {
     // One input pressed and all else are up
     isPressed ( event_name ){
         return this.outputEventBindings[event_name].reduce( 
-            (acc, elm) => acc && (elm.isUp() || elm.pressed), true
+            (acc, elm) => acc && (elm.isUp() || elm.pressed()), true
         ) && this.outputEventBindings[event_name].reduce( 
-            (acc, elm) => acc || elm.pressed, false
+            (acc, elm) => acc || elm.pressed(), false
         )
     }
 
@@ -105,7 +122,7 @@ class InputManager {
         return this.outputEventBindings[event_name].reduce( 
             (acc, elm) => acc && elm.isUp(), true
         ) && this.outputEventBindings[event_name].reduce( 
-            (acc, elm) => acc || elm.released, false
+            (acc, elm) => acc || elm.released(), false
         )
     }
 

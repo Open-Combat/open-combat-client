@@ -16,6 +16,9 @@ function ApplyBasicBindings ( InputManager ) {
     InputManager.addTracking('ArrowLeft', 'left')
     InputManager.addTracking('ArrowRight', 'right')
 
+    InputManager.addTracking(' ', 'jump')
+    InputManager.addTracking('r', 'jump')
+
 }
 
 export { ApplyBasicBindings }

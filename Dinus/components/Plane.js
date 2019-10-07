@@ -17,15 +17,13 @@ let material = new THREE.MeshBasicMaterial( {
 class Plane extends GameObject {
 
     constructor (scene) {
-        super()
         
         // Create plane
         let plane = new THREE.Mesh( geometry, material );
-        plane.rotation.x =  Math.PI / 2;
 
-        // Add it to the scene
-        scene.addGameObject( this )
-        scene.addRenderedObject( plane )
+        super(scene, plane)
+        
+        this.rotateDelta( Math.PI / 2, 0, 0)
 
     }
 }

@@ -23,7 +23,8 @@ class GameScene {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( this.renderer.domElement );
 
-        // Record of all objects on the scene
+        // Record of all objects on the 
+
         this.gameobjects = []
     }
 
@@ -50,7 +51,7 @@ class GameScene {
     render ( player ) {
 
         this.renderer.render( this.scene, player.camera );
-    
+        
     }
 
 }
