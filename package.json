@@ -1,0 +1,10 @@
+{
+    "type": "module",
+    "devDependencies": {
+        "child_process": "^1.0.2"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "socket.io": "^2.3.0"
+    }
+}
