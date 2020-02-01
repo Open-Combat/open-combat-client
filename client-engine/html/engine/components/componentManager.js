@@ -25,7 +25,8 @@ function removeEntityComponentPairFromMap ( entity, componentString ) {
 export function initializeNewComponent ( entity, componentString, data ) {
 
     let targetComponent = components[ componentString ]
-    let newComponents = targetComponent.constructor ( entity, data )
+    targetComponent.constructor ( entity, data )
+    let newComponents = targetComponent.implementedComponents;
     newComponents.forEach( c => addEntityComponentPairToMap ( entity, c ))
 
 }
@@ -33,7 +34,8 @@ export function initializeNewComponent ( entity, componentString, data ) {
 export function destroyExistingComponent ( entity, componentString ) {
 
     let targetComponent = components[ componentString ]
-    let killedComponents = targetComponent.destructor ( entity )
+    if (targetComponent.destructor) targetComponent.destructor ( entity )
+    let killedComponents = targetComponent.implementedComponents;
     killedComponents.forEach( c => removeEntityComponentPairFromMap ( entity, c ))
 
 }
